@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>DigDC API Documentation by emanuelfeld</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">DigDC API Documentation</h1>
+      <h2 class="project-tagline"></h2>
+      <a href="https://github.com/emanuelfeld/digdc" class="btn">View on GitHub</a>
+      <a href="https://github.com/emanuelfeld/digdc/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/emanuelfeld/digdc/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <p><a href="http://digdc.dclibrary.org/">DigDC</a> is the online home for the DC Public Library's Special Collections. If you visit it, you can find historical DC cartoons, photographs, maps, oral histories, postcards, and other ephemera, as well as extensive metadata about each item. Cool, right? The site uses a platform called ContentDM. It's used by many, many libraries across the country. But ContentDM's API documentation is bad. This page covers what you need to know to see what collections are on DigDC, view what they contain, and download collection files.</p>
+
+<h2>
+<a id="get-a-list-of-the-collections" class="anchor" href="#get-a-list-of-the-collections" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Get a list of the collections</h2>
+
+<p>Endpoint:</p>
+
+<pre><code>https://server16808.contentdm.oclc.org/dmwebservices/index.php?q=dmGetCollectionList/json
+</code></pre>
+
+<p>Example Query:</p>
+
+<pre><code>$ curl https://server16808.contentdm.oclc.org/dmwebservices/index.php?q=dmGetCollectionList/json | python -mjson.tool
+</code></pre>
+
+<p>Example Response:</p>
+
+<pre><code>[
+    {
+        "alias": "/p16808coll5",
+        "name": "Clifford Berryman Cartoon Collection",
+        "path": "/cdm/sites/16808/data/p16808coll5",
+        "secondary_alias": "p16808coll5"
+    },
+    {
+        "alias": "/p16808coll12",
+        "name": "Darrell C. Crain, Jr. Photograph Collection",
+        "path": "/cdm/sites/16808/data/p16808coll12",
+        "secondary_alias": "7"
+    },
+    [...]
+    {
+        "alias": "/p16808coll15",
+        "name": "Maps - City &amp; Regional",
+        "path": "/cdm/sites/16808/data/p16808coll15",
+        "secondary_alias": "10"
+    }
+]
+</code></pre>
+
+<h2>
+<a id="gets-the-items-in-a-collection" class="anchor" href="#gets-the-items-in-a-collection" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Gets the items in a collection</h2>
+
+<p>Endpoint:</p>
+
+<pre><code>https://server16808.contentdm.oclc.org/dmwebservices/index.php?q=dmQuery/&lt;collection_alias&gt;/json
+</code></pre>
+
+<p>Example Query:</p>
+
+<pre><code>$ curl https://server16808.contentdm.oclc.org/dmwebservices/index.php\?q\=dmQuery/p16808coll5/json | python -mjson.tool
+</code></pre>
+
+<p>Example Response:</p>
+
+<pre><code>{
+    "pager": {
+        "maxrecs": null,
+        "start": null,
+        "total": 131
+    },
+    "records": [
+        {
+            "": "",
+            "collection": "/p16808coll5",
+            "filetype": "jp2",
+            "find": "18.jp2",
+            "parentobject": -1,
+            "pointer": 17
+        },
+        [...]
+        {
+            "": "",
+            "collection": "/p16808coll5",
+            "filetype": "jp2",
+            "find": "15.jp2",
+            "parentobject": -1,
+            "pointer": 14
+        }
+    ]
+}
+</code></pre>
+
+<h2>
+<a id="get-the-details-of-a-record-in-a-collection" class="anchor" href="#get-the-details-of-a-record-in-a-collection" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Get the details of a record in a collection:</h2>
+
+<p>Endpoint:</p>
+
+<pre><code>https://server16808.contentdm.oclc.org/dmwebservices/index.php?q=dmGetItemInfo/&lt;collection_alias&gt;/&lt;record_pointer&gt;/json
+</code></pre>
+
+<p>Example Query:</p>
+
+<pre><code>$ curl https://server16808.contentdm.oclc.org/dmwebservices/index.php?q=dmGetItemInfo/p16808coll5/17/json | python -mjson.tool
+</code></pre>
+
+<p>Example Response:</p>
+
+<pre><code>{
+    "cdmfilesize": "17085567",
+    "cdmfilesizeformatted": "16.29 MB",
+    "cdmhasocr": "0",
+    "cdmisnewspaper": "0",
+    "cdmprintpdf": "0",
+    "creato": "Berryman, Clifford Kennedy, 1869-1949",
+    "date": {},
+    "datea": "2013-09-13",
+    "dateb": {},
+    "descri": "Unfinished portrait of an unidentified man, partially scratched out.",
+    "dmaccess": {},
+    "dmcreated": "2014-01-04",
+    "dmimage": {},
+    "dmmodified": "2015-10-06",
+    "dmoclcno": {},
+    "dmrecord": "17",
+    "file": "dcpl_p008_009p2",
+    "find": "18.jp2",
+    "format": "Image/jpeg",
+    "fullrs": "Volume1/dcpl_p008_009p2.tif",
+    "identi": "Clifford Berryman Cartoon Collection",
+    "langua": "eng",
+    "medium": "Drawings",
+    "neighb": {},
+    "notes": "Drawing is on the back of dcpl_p008_009p1; No title on drawing, title supplied by cataloger",
+    "publis": "DC Public Library, Special Collections",
+    "restrictionCode": "1",
+    "rights": "Publication rights for this image can be granted by DC Public Library.",
+    "source": "Original version: pen and ink drawing on poster board; DC Public Library, Special Collections, P8 Clifford Berryman Cartoon Collection, Series 1, Drawing 9, verso",
+    "subjec": "Sketches",
+    "techni": "Filename: dcpl_p008_009p2.tif; ByteOrder: little-endian; CompressionScheme: 1; ColorSpace: 1; FileSize: 34538590; Orientation: 1; ImageProducer: Backstage Library Works for DC Public Library; ScannerMake: Phase One; ScannerModel: IQ180; ScannerSoftware: Adobe Photoshop CS3 Windows; Resolution: 400; ImageWidth: 5977; ImageLength: 5774; BitsPerSample: 8; SamplesPerPixel: 1; Checksum: a4886739e992c580d9e9b4f5a0a4bf9f",
+    "title": "Unfinished portrait",
+    "transc": {},
+    "type": "Still Image"
+}
+</code></pre>
+
+<h2>
+<a id="download-a-records-file" class="anchor" href="#download-a-records-file" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Download a record's file</h2>
+
+<p>Endpoint:</p>
+
+<pre><code>http://digdc.dclibrary.org/utils/getfile/collection/&lt;collection_alias&gt;/id/&lt;record_pointer&gt;/filename/&lt;record_find&gt;
+</code></pre>
+
+<p>Example Query:</p>
+
+<pre><code>$ curl http://digdc.dclibrary.org/utils/getfile/collection/p16808coll5/id/17/filename/18.jp2 &gt; image.jp2
+</code></pre>
+
+<p>Example Response:</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/4269640/13532277/99a8bd2a-e1f8-11e5-8a0a-5dcf97b65048.jpg" alt="image"></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/emanuelfeld/digdc">DigDC API Documentation</a> is maintained by <a href="https://github.com/emanuelfeld">emanuelfeld</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-61502361-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
