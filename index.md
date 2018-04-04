@@ -31,9 +31,9 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p><a href="http://digdc.dclibrary.org/">Dig DC</a> is the online home for the DC Public Library's Special Collections. If you visit it, you can find historical DC cartoons, photographs, maps, oral histories, postcards, and other ephemera, as well as extensive metadata about each item. Cool, right? The site uses a platform called CONTENTdm, which is used by many, many libraries across the country. ContentDM's API documentation is minimal, so this page covers what you need to see what collections are on Dig DC, view what they contain, and download collection files.</p>
+        <p><a href="http://digdc.dclibrary.org/">Dig DC</a> is the online home for the DC Public Library's Special Collections. If you visit it, you can find historical DC cartoons, photographs, maps, oral histories, postcards, and other ephemera, as well as extensive metadata about each item. Cool, right? The site uses a platform called CONTENTdm, which is used by many, many libraries across the country. ContentDM's API documentation is minimal, so this page covers what you need to know to see what collections are on Dig DC, view what they contain, and download collection files.</p>
 
-<p>This documentation was created for the DC Public Library by Code For DC volunteer Emanuel Feld.</p>
+<p>This documentation were created for DC Public Library by Code For DC volunteer Emanuel Feld.</p>
 
 <h2>
 <a id="get-a-list-of-the-collections" class="anchor" href="#get-a-list-of-the-collections" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Get a list of the collections</h2>
@@ -184,7 +184,7 @@
 
 <p>Example Response:</p>
 
-<p><img src="images/digdc-15.jpg" alt="image"></p>
+<p><img src="https://cloud.githubusercontent.com/assets/4269640/13532277/99a8bd2a-e1f8-11e5-8a0a-5dcf97b65048.jpg" alt="image"></p>
       </section>
     </div>
 
